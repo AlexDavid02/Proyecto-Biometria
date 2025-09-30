@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registros</title>
+</head>
+<body>
+  <h1>Sistema de Registros</h1>
+
+  <section>
+    <h2>Último registro</h2>
+    <pre id="ultimo">Cargando...</pre>
+  </section>
+
+  <section>
+    <h2>Agregar nuevo registro</h2>
+    <form id="formRegistro">
+      <label>
+        Categoría:
+        <input type="text" id="categoria" value="co2" required>
+      </label><br><br>
+
+      <label>
+        Medida:
+        <input type="number" id="medida" value="123" required>
+      </label><br><br>
+
+      <label>
+        Cuenta:
+        <input type="number" id="cuenta" value="1">
+      </label><br><br>
+
+      <button type="submit">Guardar</button>
+    </form>
+  </section>
+
+  <script>
+    // Función para cargar el último registro
+    const cargarUltimo = () => {
+      fetch("/datos/ultimo")
+        .then(r => r.json())
+        .then(info => {
+          document.getElementById("ultimo").textContent = JSON.stringify(info, null, 2);
+        })
+        .catch(err => {
+          document.getElementById("ultimo").textContent = "Error al obtener datos: " + err;
+        });
+    };
+
+    // Llamada inicial
+    cargarUltimo();
+
+    // Evento para el formulario
+    document.getElementById("formRegistro").addEventListener("submit", async e => {
+      e.preventDefault();
+
+      const nuevo = {
+        categoria: document.getElementById("categoria").value,
+        medida: Number(document.getElementById("medida").value),
+        cuenta: parseInt(document.getElementById("cuenta").value) || 0,
+        fecha: new Date().toISOString()
+      };
+
+      try {
+        const resp = await fetch("/datos/nuevo", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(nuevo)
+        });
+
+        const res = await resp.json();
+
+        if (res.resultado === "ok") {
+          alert("✅ Registro insertado con ID " + res.id);
+          cargarUltimo();
+        } else {
+          alert("❌ Error: " + JSON.stringify(res));
+        }
+      } catch (error) {
+        alert("Error en el envío: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
