@@ -52,7 +52,7 @@ public class ApiRest {
         Log.d("ApiRest", "Major int: " + major + " (ID=" + idMedicion + ", contador=" + contador + ")");
         Log.d("ApiRest", "Raw minor: " + Arrays.toString(minorBytes));
 
-        if (idMedicion == 186) { // solo CO2
+        if (idMedicion == 11) { // solo CO2
             int valorCO2 = ((minorBytes[0] & 0xFF) << 8) | (minorBytes[1] & 0xFF);
             valorCO2 = ProcesarCO2(valorCO2);
             Log.d("ApiRest", "CO2: " + valorCO2);
