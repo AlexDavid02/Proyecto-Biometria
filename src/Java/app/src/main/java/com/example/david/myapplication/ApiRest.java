@@ -1,3 +1,8 @@
+//--------------------------------------------------------------
+// Autor → Alexandru Daniel David Berndt
+// Fecha → 13/10/2025
+//--------------------------------------------------------------
+
 package com.example.david.myapplication;
 
 import android.util.Log;
