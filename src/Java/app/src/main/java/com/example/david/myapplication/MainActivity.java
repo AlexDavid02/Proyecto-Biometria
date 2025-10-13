@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             String deviceName = bluetoothDevice.getName();
             String uuidDispositivo = Utilidades.bytesToHexString(tib.getUUID());
 
-            if (uuidDispositivo != null && uuidDispositivo.equals("aa:aa:aa:aa:aa:aa:aa:ba:ec:b2:ba:eb:ae:ba:eb:ae:")) {
+            if (uuidDispositivo != null && uuidDispositivo.equals("45:50:53:47:2d:47:54:49:2d:50:52:4f:59:2d:33:41:")) {
                 Log.d(ETIQUETA_LOG, "Enviando datos");
                 ApiRest.DatosProcesados datos = ApiRest.ProcesarTrama(tib);
                 new Thread(() -> ApiRest.EnviarDatos(datos)).start();
